@@ -69,7 +69,7 @@ export farblos="\033[0m"
 ps1_user="${debian_chroot:+($debian_chroot)}\[$hellblau\]\u \[$braun\]\W/ \[$hellgruen\] (^_^)/\"\[$farblos\] "
 ps1_juri_root="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[\033[00m\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
 ps1_mail_root="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[$helllila\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
-ps1_fridolin_root="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[$helltuerkis\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
+ps1_sas="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[$helltuerkis\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
 
 
 
@@ -95,7 +95,7 @@ fi
 
 if [ "$color_prompt" = yes ]; then
 	case $HOSTNAME in
-		fridolin)	if [ "$USER" = root ]; then PS1="$ps1_fridolin_root"
+		sas)	if [ "$USER" = root ]; then PS1="$ps1_sas_root"
 				else PS1="$ps1_user"; fi
 				;;
 		mail)		if [ "$USER" = root ]; then PS1="$ps1_mail_root"
@@ -145,4 +145,9 @@ fi
 
 #GnuPG
 export GPG_TTY=$(tty)
+hello.sh
+
+if [[ "$HOSTNAME" = mail || "$HOSTNAME" = sas || "$HOSTNAME" = dev ]]; then tmux.sh
+fi
+exit 0
 
