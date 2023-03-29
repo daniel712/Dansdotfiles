@@ -44,7 +44,7 @@ Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 " Initialize plugin system
 call plug#end()
 
-colorscheme morning
+colorscheme nord
 set number
 
 "vimcast.org
