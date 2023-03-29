@@ -1,4 +1,11 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
+
+# Note: PS1 and umask are already set in /etc/profile. You should not
+# need this unless you want different defaults for root.
+# PS1='${debian_chroot:+($debian_chroot)}\h:\w\$ '
+# umask 022
+
+# ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
@@ -14,10 +21,11 @@ HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
 shopt -s histappend
+PROMPT_COMMAND='history -a'
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=10000
+HISTFILESIZE=10000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -28,14 +36,43 @@ shopt -s checkwinsize
 #shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
-#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
+# PROMPT
+#
 # set a fancy prompt (non-color, unless we know we "want" color)
+#
+export schwarz="\033[0;30m"
+export dunkelgrau="\033[1;30m"
+export rot="\033[0;31m"
+export hellrot="\033[1;31m"
+export gruen="\033[0;32m"
+export hellgruen="\033[1;32m"
+export braun="\033[0;33m"
+export gelb="\033[1;33m"
+export blau="\033[0;34m"
+export hellblau="\033[1;34m"
+export lila="\033[0;35m"
+export helllila="\033[1;35m"
+export tuerkis="\033[0;36m"
+export helltuerkis="\033[1;36m"
+export hellgrau="\033[0;37m"
+export weiss="\033[1;37m"
+export farblos="\033[0m"
+
+#PROMPTS for SYSTEMS:
+ps1_user="${debian_chroot:+($debian_chroot)}\[$hellblau\]\u \[$braun\]\W/ \[$hellgruen\] (^_^)/\"\[$farblos\] "
+ps1_juri_root="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[\033[00m\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
+ps1_mail_root="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[$helllila\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
+ps1_fridolin_root="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[$helltuerkis\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
+
+
+
 case "$TERM" in
     xterm-color|*-256color) color_prompt=yes;;
 esac
@@ -57,7 +94,18 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+	case $HOSTNAME in
+		fridolin)	if [ "$USER" = root ]; then PS1="$ps1_fridolin_root"
+				else PS1="$ps1_user"; fi
+				;;
+		mail)		if [ "$USER" = root ]; then PS1="$ps1_mail_root"
+				else  PS1="$ps1_user"; fi
+				;;
+		*)		if [ "$USER" = root ]; then PS1="$ps1_juri_root"
+				else  PS1="$ps1_user"; fi
+				;;
+	esac
+
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
