@@ -15,16 +15,13 @@ case $- in
       *) return;;
 esac
 
-# PAAAAATH
-export PATH="/root/bin:$PATH"
-
-# HISTORY
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
+
 # append to the history file, don't overwrite it
 shopt -s histappend
-PROMPT_COMMAND='history -a'
+
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=10000
 HISTFILESIZE=10000
@@ -71,18 +68,18 @@ export farblos="\033[0m"
 ps1_user="${debian_chroot:+($debian_chroot)}\[$hellblau\]\u \[$braun\]\W/ \[$hellgruen\] (^_^)/\"\[$farblos\] "
 ps1_juri_root="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[\033[00m\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
 ps1_mail_root="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[$helllila\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
-ps1_sas="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[$helltuerkis\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
+ps1_fridolin_root="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[$helltuerkis\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
 
 
 
 case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
+	xterm-color) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -97,7 +94,7 @@ fi
 
 if [ "$color_prompt" = yes ]; then
 	case $HOSTNAME in
-		sas)	if [ "$USER" = root ]; then PS1="$ps1_sas_root"
+		fridolin)	if [ "$USER" = root ]; then PS1="$ps1_fridolin_root"
 				else PS1="$ps1_user"; fi
 				;;
 		mail)		if [ "$USER" = root ]; then PS1="$ps1_mail_root"
@@ -113,14 +110,9 @@ else
 fi
 unset color_prompt force_color_prompt
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
+if [ "$HOSTNAME" = h2420029 ]; then
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u@\[\033[00m\]\h:\[\033[01;34m\]\w\[\033[00m\]\$ '
+fi
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
@@ -131,7 +123,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
 if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+   .  ~/.bash_aliases
 fi
 
 # enable programmable completion features (you don't need to enable
@@ -145,8 +137,10 @@ if ! shopt -oq posix; then
   fi
 fi
 
-#GnuPG
-export GPG_TTY=$(tty)
+
+
+GPG_TTY=$(tty)
+export GPG_TTY
 
 export LESS=-R
 export LESS_TERMCAP_mb=$'\E[1;31m'     # begin bold
@@ -157,6 +151,7 @@ export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
 export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
 export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 # and so on
+
 man() {
     LESS_TERMCAP_md=$'\e[01;31m' \
     LESS_TERMCAP_me=$'\e[0m' \
@@ -167,10 +162,13 @@ man() {
     command man "$@"
 }
 
-if [ -f "/$HOME/bin/hello.sh" ] && source "/$HOME/bin/hello.sh"
-if [ -f "/$HOME/.acme.sh/acme.sh.env" ] && source "/$HOME/.acme.sh/acme.sh.env"
-if [[ "$HOSTNAME" = mail || "$HOSTNAME" = sas || "$HOSTNAME" = dev ]] && tmux.sh
-
+PATH="/root/bin:$PATH"
+export PATH
 
 #Cursor Color
 printf '\033]12;red\007'
+
+source "/$HOME/bin/hello.sh"
+source "/root/.acme.sh/acme.sh.env"
+
+tmux.sh
