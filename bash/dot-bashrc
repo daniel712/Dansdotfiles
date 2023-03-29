@@ -73,7 +73,7 @@ export farblos="\033[0m"
 ps1_user="${debian_chroot:+($debian_chroot)}\[$hellblau\]\u \[$braun\]\W/ \[$hellgruen\] (^_^)/\"\[$farblos\] "
 ps1_juri_root="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[\033[00m\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
 ps1_mail_root="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[$helllila\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
-ps1_sas_root="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[$helltuerkis\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
+ps1_sas_root="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[$hellblau\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
 
 
 
