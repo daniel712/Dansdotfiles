@@ -147,13 +147,9 @@ fi
 
 #GnuPG
 export GPG_TTY=$(tty)
-<<<<<<< HEAD
-=======
-hello.sh
 
 if [[ "$HOSTNAME" = mail || "$HOSTNAME" = sas || "$HOSTNAME" = dev ]]; then tmux.sh
 fi
->>>>>>> cd8421c0bc7c1df8d2292d9432d41c2fbbebbdb0
 
 export LESS=-R
 export LESS_TERMCAP_mb=$'\E[1;31m'     # begin bold
