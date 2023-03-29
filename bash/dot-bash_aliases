@@ -18,4 +18,4 @@ fi
 
 alias ll='ls -laF'
 alias l='ls -lF'
-alias note='vim ~/notes.md'
+alias notiz='vim ~/notes.md'
