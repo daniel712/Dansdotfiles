@@ -130,9 +130,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+[[ -f ~/.bash_aliases ]] && source ~/.bash_aliases
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -147,9 +145,6 @@ fi
 
 #GnuPG
 export GPG_TTY=$(tty)
-
-if [[ "$HOSTNAME" = mail || "$HOSTNAME" = sas || "$HOSTNAME" = dev ]]; then tmux.sh
-fi
 
 export LESS=-R
 export LESS_TERMCAP_mb=$'\E[1;31m'     # begin bold
@@ -170,10 +165,11 @@ man() {
     command man "$@"
 }
 
-if [ -f "/$HOME/bin/hello.sh" ] && source "/$HOME/bin/hello.sh"
-if [ -f "/$HOME/.acme.sh/acme.sh.env" ] && source "/$HOME/.acme.sh/acme.sh.env"
-if [[ "$HOSTNAME" = mail || "$HOSTNAME" = sas || "$HOSTNAME" = dev ]] && tmux.sh
+[[ -f "/$HOME/bin/hello.sh" ]] && source "/$HOME/bin/hello.sh"
+[[ -f "/$HOME/.acme.sh/acme.sh.env" ]] && source "/$HOME/.acme.sh/acme.sh.env"
+[[ "$HOSTNAME" = mail || "$HOSTNAME" = sas || "$HOSTNAME" = dev ]] && tmux.sh
 
 
 #Cursor Color
 printf '\033]12;red\007'
+
