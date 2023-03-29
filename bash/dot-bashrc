@@ -24,7 +24,7 @@ HOST=$(hostname -s)
 # See bash(1) for more options
 HISTCONTROL=ignoreboth
 # append to the history file, don't overwrite it
-shopt -s histappend
+#shopt -s histappend
 PROMPT_COMMAND='history -a'
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=10000
@@ -36,13 +36,14 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-#shopt -s globstar
+# shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]
+then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
@@ -72,7 +73,7 @@ export farblos="\033[0m"
 ps1_user="${debian_chroot:+($debian_chroot)}\[$hellblau\]\u \[$braun\]\W/ \[$hellgruen\] (^_^)/\"\[$farblos\] "
 ps1_juri_root="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[\033[00m\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
 ps1_mail_root="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[$helllila\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
-ps1_sas="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[$helltuerkis\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
+ps1_sas_root="${debian_chroot:+($debian_chroot)}\[$hellrot\]\u@\[$helltuerkis\]\h \[$rot\]\W/ \[$gelb\] #\[$farblos\] "
 
 
 
@@ -96,7 +97,8 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-if [ "$color_prompt" = yes ]; then
+if [ "$color_prompt" = yes ]
+then
 	case $HOST in
 		sas)	if [ "$USER" = root ]; then PS1="$ps1_sas_root"
 				else PS1="$ps1_user"; fi
@@ -131,7 +133,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-[[ -f ~/.bash_aliases ]] && source ~/.bash_aliases
+[[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -166,10 +168,12 @@ man() {
     command man "$@"
 }
 
-[[ -f "/$HOME/bin/hello.sh" ]] && source "/$HOME/bin/hello.sh"
-[[ -f "/$HOME/.acme.sh/acme.sh.env" ]] && source "/$HOME/.acme.sh/acme.sh.env"
-[[ "$HOST" = mail || "$HOST" = sas || "$HOST" = dev ]] && tmux.sh
-
+[[ -f "/$HOME/bin/hello.sh" ]] && . "/$HOME/bin/hello.sh"
+[[ -f "/$HOME/.acme.sh/acme.sh.env" ]] && . "/$HOME/.acme.sh/acme.sh.env"
+if [[ "$HOST" = mail || "$HOST" = sas || "$HOST" = dev ]]
+then
+  [[ -f $HOME/bin/tmux.sh ]] && tmux.sh
+fi
 
 #Cursor Color
 printf '\033]12;red\007'
