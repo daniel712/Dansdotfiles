@@ -149,5 +149,4 @@ hello.sh
 
 if [[ "$HOSTNAME" = mail || "$HOSTNAME" = sas || "$HOSTNAME" = dev ]]; then tmux.sh
 fi
-exit 0
 
