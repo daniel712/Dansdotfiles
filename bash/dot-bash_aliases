@@ -2,7 +2,7 @@ alias c="clear"
 alias e="exit"
 alias upgrade="sudo apt update && sudo apt upgrade"
 alias .b='. .bashrc'
-alias dir='dir -v'
+alias dirs='dirs -v'
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
