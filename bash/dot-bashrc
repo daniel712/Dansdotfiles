@@ -169,7 +169,7 @@ man() {
 }
 
 [[ -f "/$HOME/bin/hello.sh" ]] && "/$HOME/bin/hello.sh"
-[[ -f "/$HOME/.acme.sh/acme.sh.env" ]] && "/$HOME/.acme.sh/acme.sh.env"
+#[[ -f "/$HOME/.acme.sh/acme.sh" ]] && "/$HOME/.acme.sh/acme.sh"
 if [[ "$HOST" = mail || "$HOST" = sas || "$HOST" = dev ]]
 then
   [[ -f $HOME/bin/tmux.sh ]] && tmux.sh
