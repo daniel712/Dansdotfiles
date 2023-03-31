@@ -19,3 +19,4 @@ fi
 alias ll='ls -laF'
 alias l='ls -lF'
 alias notiz='vim $HOME/notes.md'
+alias mysqlR='mysql --defaults-file=/etc/mysql/debian.cnf'
