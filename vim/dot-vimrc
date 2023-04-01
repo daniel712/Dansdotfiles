@@ -47,7 +47,7 @@ call plug#end()
 colorscheme nord
 set number
 
-"vimcast.org
+"vimcast.org - open files in the dir of the current file opened...
 let mapleader=','
 cnoremap %% <C-R>=fnameescape(expand('%:h')).'/'<cr>
 map <leader>ew :e %%
