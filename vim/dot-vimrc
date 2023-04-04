@@ -41,11 +41,32 @@ Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 "" Unmanaged plugin (manually installed and updated)
 "Plug '~/my-prototype-plugin'
 
+"" Plugins für php
+"" Quelle: https://thevaluable.dev/vim-php-ide/
+
+" Ctags
+Plug 'ludovicchabant/vim-gutentags'
+
+"essentials
+Plug 'bfredl/nvim-miniyank'
+Plug 'moll/vim-bbye'
+Plug 'itchyny/lightline.vim'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-abolish'
+
+" PHP
+Plug 'StanAngeloff/php.vim'
+Plug 'stephpy/vim-php-cs-fixer'
+
+" Autocomplete
+Plug 'ncm2/ncm2' | Plug 'phpactor/phpactor' | Plug 'phpactor/ncm2-phpactor'
+
+" Git
+Plug 'tpope/vim-fugitive' | Plug 'mhinz/vim-signify'
+
 " Initialize plugin system
 call plug#end()
 
-colorscheme nord
-set number
 
 "vimcast.org - open files in the dir of the current file opened...
 let mapleader=','
@@ -56,3 +77,10 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
+
+"=================================================================
+
+colorscheme breeze
+set number
+ 	set gfn=Lucida\ Console\ DK\ 16
+ 	set gfw=Lucida\ Grande\ Mono\ DK\ 16
