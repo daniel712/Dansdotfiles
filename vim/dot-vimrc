@@ -1,17 +1,18 @@
 "
 " Daniel's vimrc
 "
-
+" Variables
+let g:python3_host_prog='/usr/bin/python3'
+let g:phpactorPhpBin = "/usr/bin/php8.2"
 " Specify a directory for plugins
 " - For Neovim: stdpath('data') . '/plugged'
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 
 " Make sure you use single quotes
+"Plug 'arcticicestudio/nord-vim'
 
-Plug 'arcticicestudio/nord-vim'
-
-Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline'
 
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
@@ -20,7 +21,7 @@ Plug 'junegunn/vim-easy-align'
 "Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 
 " Multiple Plug commands can be written in a single line using | separators
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets' | Plug 'ncm2/ncm2-ultisnips' | Plug 'ncm2/ncm2-match-highlight' 
 
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -48,7 +49,7 @@ Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'ludovicchabant/vim-gutentags'
 
 "essentials
-Plug 'bfredl/nvim-miniyank'
+""Plug 'bfredl/nvim-miniyank'
 Plug 'moll/vim-bbye'
 Plug 'itchyny/lightline.vim'
 Plug 'tpope/vim-commentary'
@@ -57,15 +58,24 @@ Plug 'tpope/vim-abolish'
 " PHP
 Plug 'StanAngeloff/php.vim'
 Plug 'stephpy/vim-php-cs-fixer'
+Plug 'senchalabs/cssbeautify'
 
 " Autocomplete
-Plug 'ncm2/ncm2' | Plug 'phpactor/phpactor' | Plug 'phpactor/ncm2-phpactor'
+Plug 'phpactor/phpactor', {'for': 'php', 'tag': '*', 'do': 'composer install --no-dev -o'}
+Plug 'ncm2/ncm2' | Plug 'phpactor/ncm2-phpactor' 
+Plug 'roxma/nvim-yarp' | Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'ncm2/ncm2-cssomni' | Plug 'ncm2/ncm2-html-subscope' | 
 
 " Git
 Plug 'tpope/vim-fugitive' | Plug 'mhinz/vim-signify'
 
+" markdown syntax highlight, theme
+Plug 'morhetz/gruvbox'
+Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
 " Initialize plugin system
 call plug#end()
+"=================================================================
+"
 
 
 "vimcast.org - open files in the dir of the current file opened...
@@ -78,9 +88,83 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+set ts=2 sts=2 sw=2 expandtab
+" Shortcut to rapidly toggle `set list`
+nmap <leader>l :set list!<CR>
+
+" Use the same symbols as TextMate for tabstops and EOLs
+set listchars=tab:▸\ ,eol:¬
+"Invisible character colors 
+highlight NonText guifg=#1c2833
+highlight SpecialKey guifg=#1c2833
+
+map <F9> :set filetype=html<CR>
+map <F10> :set filetype=php<CR>
+map <F8> :source ~/.vimrc<CR>
+
 "=================================================================
 
-colorscheme breeze
+set background=dark
+colorscheme gruvbox
 set number
- 	set gfn=Lucida\ Console\ DK\ 16
- 	set gfw=Lucida\ Grande\ Mono\ DK\ 16
+set relativenumber
+
+set laststatus=2
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ }
+
+set gfn=Lucida\ Console\ DK\ 16
+set gfw=Lucida\ Grande\ Mono\ DK\ 16
+
+
+" Trigger configuration. You need to change this to something other than <tab> if you use one of the following:
+" - https://github.com/Valloric/YouCompleteMe
+" - https://github.com/nvim-lua/completion-nvim
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
+" If you want :UltiSnipsEdit to split your window.
+let g:UltiSnipsEditSplit="horizontal"
+
+" ncm2
+    " enable ncm2 for all buffers
+    autocmd BufEnter * call ncm2#enable_for_buffer()
+    
+    " IMPORTANT: :help Ncm2PopupOpen for more information
+    set completeopt=noinsert,menuone,noselect
+    " suppress the annoying 'match x of y', 'The only match' and 'Pattern not
+    " found' messages
+    set shortmess+=c
+
+    " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+    inoremap <c-c> <ESC>
+
+    " When the <Enter> key is pressed while the popup menu is visible, it only
+    " hides the menu. Use this mapping to close the menu and also start a new
+    " line.
+    inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+
+    " Use <TAB> to select the popup menu:
+    inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+    inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+    " wrap existing omnifunc
+    " Note that omnifunc does not run in background and may probably block the
+    " editor. If you don't want to be blocked by omnifunc too often, you could
+    " add 180ms delay before the omni wrapper:
+    "  'on_complete': ['ncm2#on_complete#delay', 180,
+    "               \ 'ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+    au User Ncm2Plugin call ncm2#register_source({
+            \ 'name' : 'css',
+            \ 'priority': 9,
+            \ 'subscope_enable': 1,
+            \ 'scope': ['css','scss'],
+            \ 'mark': 'css',
+            \ 'word_pattern': '[\w\-]+',
+            \ 'complete_pattern': ':\s*',
+            \ 'on_complete': ['ncm2#on_complete#omni', 'csscomplete#CompleteCSS'],
+            \ })
+
+
