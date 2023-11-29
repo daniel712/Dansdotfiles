@@ -34,12 +34,6 @@ set ts=2 sts=2 sw=2 expandtab
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
 
-" Use the same symbols as TextMate for tabstops and EOLs
-set listchars=tab:▸\ ,eol:¬
-"Invisible character colors 
-highlight NonText guifg=#1c2833
-highlight SpecialKey guifg=#1c2833
-
 map <F9> :set filetype=html<CR>
 map <F10> :set filetype=php<CR>
 map <F8> :source ~/.vimrc<CR>
@@ -48,8 +42,16 @@ map <F8> :source ~/.vimrc<CR>
 
 set background=dark
 colorscheme gruvbox
+" Use the same symbols as TextMate for tabstops and EOLs
+set listchars=tab:▸\ ,eol:¬
+"Invisible character colors 
+highlight NonText guifg=#1c2833 ctermbg=none
+highlight SpecialKey guifg=#1c2833
+highlight Normal guibg=NONE ctermbg=NONE
+
 set number
 set relativenumber
+set hlsearch
 
 set laststatus=2
 let g:lightline = {
